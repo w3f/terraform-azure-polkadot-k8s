@@ -1,0 +1,21 @@
+version: 2
+
+jobs:
+  integrationTests:
+    docker:
+      - image: web3f/terratest:v0.1.0
+    steps:
+      - checkout
+      - run:
+          description: run integration tests
+          command: |
+            ./scripts/integration-tests.sh
+
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - integrationTests:
+          filters:
+            tags:
+              only: /.*/
